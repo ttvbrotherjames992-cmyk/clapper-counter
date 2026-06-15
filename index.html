@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clapper Counter</title>
+
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #counter {
+      font-size: 60px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="counter">Loading...</div>
+
+  <script>
+    async function loadCounter() {
+      try {
+        const res = await fetch("https://worldclapday.com/api/clapper-counts");
+        const data = await res.json();
+
+        const count = data.data.totalCount;
+
+        document.getElementById("counter").innerText =
+          count.toLocaleString();
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById("counter").innerText = "Error loading";
+      }
+    }
+
+    loadCounter();
+    setInterval(loadCounter, 5000);
+  </script>
+
+</body>
+</html>
